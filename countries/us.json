@@ -1,6 +1,13 @@
 {
     "name": "United States",
     "abbreviation": "us",
+    "aliases": {
+        "SF": "San Francisco",
+        "New York City": "New York",
+        "UK": "United Kingdom",
+        "NYC": "New York City",
+        "NY": "New York"
+    },
     "cities": [
         "New York",
         "Los Angeles",
@@ -744,7 +751,9 @@
         "Grapevine",
         "Aliso Viejo",
         "Sammamish",
-        "Casa Grande"
+        "Casa Grande",
+
+        "Menlo Park"
     ],
     "states": [
         {
