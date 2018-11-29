@@ -1,0 +1,30 @@
+{
+    "name": "Poland",
+    "abbreviation": "pl",
+    "cities": [
+        "Katowice",
+        "Warsaw",
+        "Łódź",
+        "Kraków",
+        "Gdańsk",
+        "Bytom",
+        "Wrocław",
+        "Poznań",
+        "Gliwice",
+        "Szczecin",
+        "Bydgoszcz",
+        "Lublin",
+        "Gdynia",
+        "Białystok",
+        "Rzeszów",
+        "Kielce",
+        "Olsztyn",
+        "Opole",
+        "Elbląg",
+        "Zielona Góra",
+        "Koszalin",
+        "Twierdza Grudziadz",
+        "Inowrocław",
+        "Ełk"
+    ]
+}

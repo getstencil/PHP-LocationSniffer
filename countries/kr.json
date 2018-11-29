@@ -1,0 +1,33 @@
+{
+    "name": "South Korea",
+    "abbreviation": "kr",
+    "cities": [
+        "Seoul",
+        "Busan",
+        "Incheon",
+        "Daegu",
+        "Yejŏng",
+        "Gwangju",
+        "Kumasan",
+        "Suwŏn",
+        "Ulsan",
+        "Song-mal",
+        "Goyang",
+        "Bucheon",
+        "Cheongju",
+        "Ansan",
+        "Jeonju",
+        "Pohang",
+        "Jeju",
+        "Yŏsu",
+        "Iksan",
+        "Tŏkho",
+        "Kunsan",
+        "Wŏnju",
+        "Sinchon",
+        "Kangnŭng",
+        "Kyŏngju",
+        "Andong",
+        "Seongcheon"
+    ]
+}

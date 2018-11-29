@@ -1,0 +1,15 @@
+{
+    "name": "Belgium",
+    "abbreviation": "be",
+    "cities": [
+        "Brussels",
+        "Antwerp",
+        "Liège",
+        "Gent",
+        "Charleroi",
+        "Brugge",
+        "Namur",
+        "Mons",
+        "Hasselt"
+    ]
+}

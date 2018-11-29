@@ -1,0 +1,101 @@
+{
+    "name": "Canada",
+    "abbreviation": "ca",
+    "cities": [
+        "Toronto",
+        "Montréal",
+        "Vancouver",
+        "Ottawa",
+        "Calgary",
+        "Edmonton",
+        "Hamilton",
+        "Winnipeg",
+        "Québec",
+        "Oshawa",
+        "Kitchener",
+        "Halifax",
+        "London",
+        "Windsor",
+        "Victoria",
+        "Saskatoon",
+        "Barrie",
+        "Regina",
+        "Sudbury",
+        "Abbotsford",
+        "Sarnia",
+        "Sherbrooke",
+        "Saint John’s",
+        "Kelowna",
+        "Trois-Rivières",
+        "Kingston",
+        "Thunder Bay",
+        "Moncton",
+        "Saint John",
+        "Nanaimo",
+        "Peterborough",
+        "Saint-Jérôme",
+        "Red Deer",
+        "Lethbridge",
+        "Kamloops",
+        "Prince George",
+        "Medicine Hat",
+        "Drummondville",
+        "Chicoutimi",
+        "Fredericton",
+        "Chilliwack"
+    ],
+    "states": [
+        {
+            "name": "Albert",
+            "abbreviation": "AB"
+        },
+        {
+            "name": "British Columbia",
+            "abbreviation": "BC"
+        },
+        {
+            "name": "Manitoba",
+            "abbreviation": "MB"
+        },
+        {
+            "name": "New Brunswick",
+            "abbreviation": "NB"
+        },
+        {
+            "name": "Newfoundland and Labrador",
+            "abbreviation": "NL"
+        },
+        {
+            "name": "Nova Scotia",
+            "abbreviation": "NS"
+        },
+        {
+            "name": "Northwest Territories",
+            "abbreviation": "NT"
+        },
+        {
+            "name": "Nunavut",
+            "abbreviation": "NU"
+        },
+        {
+            "name": "Ontario",
+            "abbreviation": "ON"
+        },
+        {
+            "name": "Prince Edward Island",
+            "abbreviation": "PE"
+        },
+        {
+            "name": "Québec",
+            "abbreviation": "QC"
+        },
+        {
+            "name": "Saskatchewan",
+            "abbreviation": "SK"
+        },
+        {
+            "name": "Yuko",
+            "abbreviation": "YT"
+        }
+    ]
+}

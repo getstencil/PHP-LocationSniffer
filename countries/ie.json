@@ -1,0 +1,11 @@
+{
+    "name": "Ireland",
+    "abbreviation": "ie",
+    "cities": [
+        "Dublin",
+        "Cork",
+        "Limerick",
+        "Galway",
+        "Waterford"
+    ]
+}

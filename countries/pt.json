@@ -1,0 +1,16 @@
+{
+    "name": "Portugal",
+    "abbreviation": "pt",
+    "cities": [
+        "Lisbon",
+        "Picotos",
+        "Braga",
+        "Funchal",
+        "Setúbal",
+        "Copeira",
+        "Ponta Delgada",
+        "Portimão",
+        "Évora",
+        "Aveiro"
+    ]
+}
