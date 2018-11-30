@@ -1,9 +1,12 @@
 {
+    "Bay Area, Ca": "California",
+    "Bay Area": "California",
+    "Bosnia": "Bosnia And Herzegovina",
     "Brasil": "Brazil",
     "Copenhagen": "København",
-    "SF": "San Francisco",
     "New York City": "New York, New York",
-    "UK": "United Kingdom",
-    "NYC": "New York City",
-    "NY": "New York"
+    "NY": "New York",
+    "NYC": "New York, New York",
+    "SF": "San Francisco",
+    "UK": "United Kingdom"
 }

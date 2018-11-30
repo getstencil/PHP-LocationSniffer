@@ -325,10 +325,8 @@
                         self::_getOutputFormat($variables)
                     );
                     self::$_locationStrings[$type][$value] = $variables;
-                    self::$_locationStrings[self::_sanitize($value)] = $variables;
-                    if (self::_sanitize($value) === 'Sao Paulo') {
-                        exit('s');
-                    }
+                    $sanized = self::_sanitize($value);
+                    self::$_locationStrings[$type][$sanized] = $variables;
                 }
             }
         }
@@ -562,7 +560,6 @@
 
             // Replace any aliases found
             $str = self::_convertAliases($str);
-            $str = self::_convertAliases($str);
 
             // Lowercase again because of alias swaps
             $str = strtolower($str);
@@ -704,7 +701,7 @@
          */
         public static function test(): void
         {
-            $showSuccessful = false;
+            $showSuccessful = true;
             $path = (__DIR__) . '/tests.json';
             $content = file_get_contents($path);
             $decoded = json_decode($content, true);
