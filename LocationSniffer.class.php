@@ -237,6 +237,28 @@
         }
 
         /**
+         * _formatMatch
+         * 
+         * @access  protected
+         * @static
+         * @param   array $match
+         * @return  array
+         */
+        protected static function _formatMatch(array $match): array
+        {
+            $properties = array();
+            foreach ($match as $key => $value) {
+                if (preg_match('/^%/', $key) === 1) {
+                    $formatted = preg_replace('/^%/', '', $key);
+                    $properties[$formatted] = $value;
+                    unset($match[$key]);
+                }
+            }
+            $match['properties'] = $properties;
+            return $match;
+        }
+
+        /**
          * _getColumnMapKeys
          * 
          * @access  protected
@@ -293,6 +315,25 @@
                 return $outputFormat['state'];
             }
             return $outputFormat['country'];
+        }
+
+        /**
+         * _getResponse
+         * 
+         * @access  protected
+         * @static
+         * @param   string $str
+         * @param   array $match
+         * @return  array
+         */
+        protected static function _getResponse(string $str, array $match): array
+        {
+            $match = self::_formatMatch($match);
+            $response = array(
+                'str' => $str,
+                'matches' => array($match)
+            );
+            return $response;
         }
 
         /**
@@ -669,12 +710,8 @@
             self::_loadCountries();
             self::_loadCountryLocationStrings();
             if (isset(self::$_locationStrings['countries'][$normalized]) === true) {
-                $response = array(
-                    'str' => $str,
-                    'matches' => array(
-                        self::$_locationStrings['countries'][$normalized]
-                    )
-                );
+                $match = self::$_locationStrings['countries'][$normalized];
+                $response = self::_getResponse($str, $match);
                 return $response;
             }
 
@@ -682,24 +719,16 @@
             self::_loadStates();
             self::_loadStateLocationStrings();
             if (isset(self::$_locationStrings['states'][$normalized]) === true) {
-                $response = array(
-                    'str' => $str,
-                    'matches' => array(
-                        self::$_locationStrings['states'][$normalized]
-                    )
-                );
+                $match = self::$_locationStrings['states'][$normalized];
+                $response = self::_getResponse($str, $match);
                 return $response;
             }
 
             // City check
             self::_loadCityLocationStrings();
             if (isset(self::$_locationStrings['cities'][$normalized]) === true) {
-                $response = array(
-                    'str' => $str,
-                    'matches' => array(
-                        self::$_locationStrings['cities'][$normalized]
-                    )
-                );
+                $match = self::$_locationStrings['cities'][$normalized];
+                $response = self::_getResponse($str, $match);
                 return $response;
             }
 
