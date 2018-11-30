@@ -1,6 +1,9 @@
 {
     "name": "United Kingdom",
     "abbreviation": "gb",
+    "alternateAbbreviations": [
+        "uk"
+    ],
     "cities": [
         "London",
         "Birmingham",

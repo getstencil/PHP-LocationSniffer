@@ -1,0 +1,12 @@
+{
+    "name": "Denmark",
+    "abbreviation": "dk",
+    "cities": [
+        "Copenhagen",
+        "Aarhus",
+        "Odense",
+        "Skalborg",
+        "Esbjerg",
+        "Vejle"
+    ]
+}
