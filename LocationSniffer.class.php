@@ -8,6 +8,7 @@
      * @see     https://simplemaps.com/data/world-cities
      * @see     https://gist.github.com/Miserlou/c5cd8364bf9b2420bb29
      * @see     https://simplemaps.com/data/ca-cities
+     * @see     https://docs.google.com/spreadsheets/d/11gbBoutkd9KPCqsD9YtlW_XR_Yds-ofbSwkh65bnnkM/edit?usp=sharing
      * @author  Oliver Nassar <oliver@getstencil.com>
      */
     abstract class LocationSniffer
@@ -20,6 +21,15 @@
          * @var     array (default: array())
          */
         protected static $_aliases = array();
+
+        /**
+         * _cacheClosure
+         * 
+         * @access  protected
+         * @static
+         * @var     null|Closure (default: null)
+         */
+        protected static $_cacheClosure = null;
 
         /**
          * _cities
@@ -175,6 +185,7 @@
          */
         protected static $_separators = array(
             '',
+            '-',
             ',',
             '/',
             ':'
@@ -643,9 +654,9 @@
          * @access  protected
          * @static
          * @param   string $str
-         * @return  null|array
+         * @return  array
          */
-        protected static function _sniff(string $str): ?array
+        protected static function _sniff(string $str): array
         {
             // Clean input
             $cleaned = self::_clean($str);
@@ -658,24 +669,59 @@
             self::_loadCountries();
             self::_loadCountryLocationStrings();
             if (isset(self::$_locationStrings['countries'][$normalized]) === true) {
-                return self::$_locationStrings['countries'][$normalized];
+                $response = array(
+                    'str' => $str,
+                    'matches' => array(
+                        self::$_locationStrings['countries'][$normalized]
+                    )
+                );
+                return $response;
             }
 
             // State check
             self::_loadStates();
             self::_loadStateLocationStrings();
             if (isset(self::$_locationStrings['states'][$normalized]) === true) {
-                return self::$_locationStrings['states'][$normalized];
+                $response = array(
+                    'str' => $str,
+                    'matches' => array(
+                        self::$_locationStrings['states'][$normalized]
+                    )
+                );
+                return $response;
             }
 
             // City check
             self::_loadCityLocationStrings();
             if (isset(self::$_locationStrings['cities'][$normalized]) === true) {
-                return self::$_locationStrings['cities'][$normalized];
+                $response = array(
+                    'str' => $str,
+                    'matches' => array(
+                        self::$_locationStrings['cities'][$normalized]
+                    )
+                );
+                return $response;
             }
 
             // Bail
-            return null;
+            $response = array(
+                'str' => $str,
+                'matches' => array()
+            );
+            return $response;
+        }
+
+        /**
+         * setCacheClosure
+         * 
+         * @access  public
+         * @static
+         * @param   Closure $closure
+         * @return  void
+         */
+        public static function setCacheClosure(Closure $closure): void
+        {
+            self::$_cacheClosure = $closure;
         }
 
         /**
@@ -684,11 +730,25 @@
          * @access  public
          * @static
          * @param   string $str
-         * @return  null|array
+         * @return  array
          */
-        public static function sniff(string $str): ?array
+        public static function sniff(string $str): array
         {
-            $response = self::_sniff($str);
+            // No cache closure defined
+            if (self::$_cacheClosure === null) {
+                $response = self::_sniff($str);
+                return $response;
+            }
+
+            // Cache closure defined
+            $callback = self::$_cacheClosure;
+            $args = array($str);
+            $response = call_user_func_array($callback, $args);
+            if ($response === null) {
+                $response = self::_sniff($str);
+                $args = array($str, $response);
+                call_user_func_array($callback, $args);
+            }
             return $response;
         }
 
@@ -697,11 +757,11 @@
          * 
          * @access  public
          * @static
+         * @param   bool $showSuccessful (default: true)
          * @return  void
          */
-        public static function test(): void
+        public static function test(bool $showSuccessful = true): void
         {
-            $showSuccessful = true;
             $path = (__DIR__) . '/tests.json';
             $content = file_get_contents($path);
             $decoded = json_decode($content, true);
@@ -725,6 +785,8 @@
                     )
                 );
             }
+
+            // Response filtering
             if ($showSuccessful === false) {
                 $response = array_filter($response, function($var) {
                     if ($var['response'] === null) {
@@ -732,22 +794,21 @@
                     }
                     return false;
                 });
-                echo '<h1>' . ($failed) . ' failed attempt(s) of ' . count($strs). '</h1>';
-                echo '<pre>';
-                print_r($response);
-                echo '</pre>';
-                exit(0);
+                $msg = ($failed) . ' failed attempt(s) of ' . count($strs);
+            } else {
+                $response = array_filter($response, function($var) {
+                    if ($var['response'] === null) {
+                        return false;
+                    }
+                    return true;
+                });
+                $msg = ($successful) . ' successful attempt(s) of ' . count($strs);
             }
-            $response = array_filter($response, function($var) {
-                if ($var['response'] === null) {
-                    return false;
-                }
-                return true;
-            });
-            echo '<h1>' . ($successful) . ' successful attempt(s) of ' . count($strs). '</h1>';
+
+            // Output
+            echo '<h1>' . ($msg). '</h1>';
             echo '<pre>';
             print_r($response);
             echo '</pre>';
-            exit(0);
         }
     }

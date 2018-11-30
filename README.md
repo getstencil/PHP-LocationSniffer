@@ -2,21 +2,35 @@
 Attempts to determine location data on a passed in string.  
 Currently supports the following formats:
 
-- `%city`
+- `%cityName`
+- `%cityName%sep %stateName`
+- `%cityName%sep %stateAbbr`
+- `%cityName%sep %countryName`
+- `%cityName%sep %countryAbbr2`
+- `%stateName%sep %cityName`
+- `%countryName%sep %cityName`
+- `%countryAbbr2%sep %cityName`
+- `%cityName%sep %stateName%sep %countryName`
+- `%cityName%sep %stateName%sep %countryAbbr2`
+- `%cityName%sep %stateAbbr%sep %countryName`
+- `%cityName%sep %stateAbbr%sep %countryAbbr`
+- `%countryAbbr2`
+- `%countryAbbr3`
+- `%countryNam`
+- `%countryAbbr2%sep %stateAbbr `
+- `%countryAbbr2%sep %stateName `
+- `%countryAbbr3%sep %stateAbbr `
+- `%countryAbbr3%sep %stateName `
+- `%countryName%sep %stateAbbr `
+- `%countryName%sep %stateName `
+- `%stateAbbr`
+- `%stateAbbr%sep %countryAbbr2`
+- `%stateAbbr%sep %countryAbbr3`
+- `%stateAbbr%sep %countryName`
 - `%stateName`
-- `%countryName`
-- `%countryAbbreviation`
-- `%city%sep %stateName`
-- `%city%sep %stateAbbreviation`
-- `%city%sep %countryName`
-- `%city%sep %countryAbbreviation`
-- `%stateName%sep %city`
-- `%countryName%sep %city`
-- `%countryAbbreviation%sep %city`
-- `%city%sep %stateName%sep $countryName`
-- `%city%sep %stateName%sep $countryAbbreviation`
-- `%city%sep %stateAbbreviation%sep $countryName`
-- `%city%sep %stateAbbreviation%sep $countryAbbreviation`
+- `%stateName%sep %countryAbbr2`
+- `%stateName%sep %countryAbbr3`
+- `%stateName%sep %countryName`
 
 
 ### References
