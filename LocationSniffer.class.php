@@ -56,6 +56,15 @@
         );
 
         /**
+         * _countryData
+         * 
+         * @access  protected
+         * @static
+         * @var     array (default: array())
+         */
+        protected static $_countryData = array();
+
+        /**
          * _locationStrings
          * 
          * @access  protected
@@ -65,13 +74,32 @@
         protected static $_locationStrings = array();
 
         /**
-         * _countryData
+         * _patterns
          * 
          * @access  protected
          * @static
-         * @var     array (default: array())
+         * @var     array
          */
-        protected static $_countryData = array();
+        protected static $_patterns = array(
+            '%city',
+            '%stateName',
+            '%countryName',
+            '%countryAbbreviation',
+
+            '%city%sep %stateName',
+            '%city%sep %stateAbbreviation',
+            '%city%sep %countryName',
+            '%city%sep %countryAbbreviation',
+
+            '%stateName%sep %city',
+            '%countryName%sep %city',
+            '%countryAbbreviation%sep %city',
+
+            '%city%sep %stateName%sep $countryName',
+            '%city%sep %stateName%sep $countryAbbreviation',
+            '%city%sep %stateAbbreviation%sep $countryName',
+            '%city%sep %stateAbbreviation%sep $countryAbbreviation'
+        );
 
         /**
          * _separators
@@ -88,26 +116,22 @@
         );
 
         /**
-         * _patterns
+         * _clean
+         * 
+         * Attempts to clean up the passed in string so that any superfluous
+         * data is not included in the check.
          * 
          * @access  protected
          * @static
-         * @var     array
+         * @param   string $str
+         * @return  string
          */
-        protected static $_patterns = array(
-            '%city',
-            '%stateName',
-            '%countryName',
-            '%countryAbbreviation',
-
-            '%city%sep %stateName',
-            '%city%sep %countryName',
-            '%city%sep %countryAbbreviation',
-
-            '%stateName%sep %city',
-            '%countryName%sep %city',
-            '%countryAbbreviation%sep %city'
-        );
+        protected static function _clean(string $str): string
+        {
+            $str = trim($str);
+            $str = preg_replace('!\s+!', ' ', $str);
+            return $str;
+        }
 
         /**
          * _includePatterns
@@ -155,10 +179,44 @@
                     $variables['pattern'] = $pattern;
                     self::$_locationStrings[$value] = $variables;
                     self::$_locationStrings[self::_sanitize($value)] = $variables;
-// prx(
-//     self::_sanitize('São Paulo')
-// );
                 }
+            }
+        }
+
+        /**
+         * _loadCountries
+         * 
+         * @access  protected
+         * @static
+         * @return  bool
+         */
+        protected static function _loadCountries(): bool
+        {
+            if (count(self::$_countryData) > 0) {
+                return false;
+            }
+            foreach (self::$_countryAbbreviations as $countryAbbreviation) {
+                self::_loadCountry($countryAbbreviation);
+            }
+            return true;
+        }
+
+        /**
+         * _loadCountry
+         * 
+         * @access  protected
+         * @static
+         * @param   string $countryAbbreviation
+         * @return  void
+         */
+        protected static function _loadCountry(string $countryAbbreviation): void
+        {
+            $path = (__DIR__) . '/countries/' . ($countryAbbreviation) . '.json';
+            $content = file_get_contents($path);
+            $decoded = json_decode($content, true);
+            array_push(self::$_countryData, $decoded);
+            if (isset($decoded['states']) === false) {
+                $decoded['states'] = array();
             }
         }
 
@@ -213,57 +271,32 @@
         }
 
         /**
-         * _loadCountry
+         * _normalize
          * 
-         * @access  protected
-         * @static
-         * @param   string $countryAbbreviation
-         * @return  void
-         */
-        protected static function _loadCountry(string $countryAbbreviation): void
-        {
-            $path = (__DIR__) . '/countries/' . ($countryAbbreviation) . '.json';
-            $content = file_get_contents($path);
-            $decoded = json_decode($content, true);
-            array_push(self::$_countryData, $decoded);
-            if (isset($decoded['states']) === false) {
-                $decoded['states'] = array();
-            }
-        }
-
-        /**
-         * _loadCountries
-         * 
-         * @access  protected
-         * @static
-         * @return  bool
-         */
-        protected static function _loadCountries(): bool
-        {
-            if (count(self::$_countryData) > 0) {
-                return false;
-            }
-            foreach (self::$_countryAbbreviations as $countryAbbreviation) {
-                self::_loadCountry($countryAbbreviation);
-            }
-            return true;
-        }
-
-        /**
-         * _clean
-         * 
-         * Attempts to clean up the passed in string so that any superfluous
-         * data is not included in the check.
+         * Normalizes the passed in string so that it's more likely to be in the
+         * same format as the location string values.
          * 
          * @access  protected
          * @static
          * @param   string $str
          * @return  string
          */
-        protected static function _clean(string $str): string
+        protected static function _normalize(string $str): string
         {
-            $str = trim($str);
-            $str = preg_replace('!\s+!', ' ', $str);
+            if (strstr($str, ' & ') !== false) {
+                $pieces = explode(' & ', $str);
+                $str = trim($pieces[0]);
+            }
+            $str = strtolower($str);
+            $separators = self::$_separators;
+            foreach ($separators as $separator) {
+                $pattern = '/[s]+[' . ($separator) . ']{1}[s]+/';
+                $str = str_replace(
+                    ' ' . ($separator) . ' ',
+                    ($separator) . ' ',
+                    $str
+                );
+            }
             return $str;
         }
 
@@ -334,36 +367,6 @@
                 $str
             );
             return strtolower($str);
-        }
-
-        /**
-         * _normalize
-         * 
-         * Normalizes the passed in string so that it's more likely to be in the
-         * same format as the location string values.
-         * 
-         * @access  protected
-         * @static
-         * @param   string $str
-         * @return  string
-         */
-        protected static function _normalize(string $str): string
-        {
-            if (strstr($str, ' & ') !== false) {
-                $pieces = explode(' & ', $str);
-                $str = trim($pieces[0]);
-            }
-            $str = strtolower($str);
-            $separators = self::$_separators;
-            foreach ($separators as $separator) {
-                $pattern = '/[s]+[' . ($separator) . ']{1}[s]+/';
-                $str = str_replace(
-                    ' ' . ($separator) . ' ',
-                    ($separator) . ' ',
-                    $str
-                );
-            }
-            return $str;
         }
 
         /**
