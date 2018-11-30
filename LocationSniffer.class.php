@@ -762,53 +762,52 @@
          */
         public static function test(bool $showSuccessful = true): void
         {
+            // Load test location strings
             $path = (__DIR__) . '/tests.json';
             $content = file_get_contents($path);
             $decoded = json_decode($content, true);
             $strs = $decoded;
+
+            // Keep track of counts
             $total = count($strs);
             $failed = 0;
             $successful = 0;
-            $response = array();
+
+            // Keep track of attempt responses
+            $attempts = array();
             foreach ($strs as $str) {
                 $attempt = self::sniff($str);
-                if ($attempt === null) {
+                if (empty($attempt['matches']) === true) {
                     ++$failed;
                 } else {
                     ++$successful;
                 }
-                array_push(
-                    $response,
-                    array(
-                        'str' => $str,
-                        'response' => $attempt
-                    )
-                );
+                array_push($attempts, $attempt);
             }
 
             // Response filtering
-            if ($showSuccessful === false) {
-                $response = array_filter($response, function($var) {
-                    if ($var['response'] === null) {
-                        return true;
-                    }
-                    return false;
-                });
-                $msg = ($failed) . ' failed attempt(s) of ' . count($strs);
-            } else {
-                $response = array_filter($response, function($var) {
-                    if ($var['response'] === null) {
+            if ($showSuccessful === true) {
+                $attempts = array_filter($attempts, function($attempt) {
+                    if (empty($attempt['matches']) === true) {
                         return false;
                     }
                     return true;
                 });
                 $msg = ($successful) . ' successful attempt(s) of ' . count($strs);
+            } else {
+                $attempts = array_filter($attempts, function($attempt) {
+                    if (empty($attempt['matches']) === true) {
+                        return true;
+                    }
+                    return false;
+                });
+                $msg = ($failed) . ' failed attempt(s) of ' . count($strs);
             }
 
             // Output
             echo '<h1>' . ($msg). '</h1>';
             echo '<pre>';
-            print_r($response);
+            print_r($attempts);
             echo '</pre>';
         }
     }
