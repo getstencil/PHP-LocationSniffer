@@ -263,9 +263,6 @@
                         }
                     }
                 }
-                // if ($index === 2) {
-                //     break;
-                // }
             }
             return true;
         }
@@ -290,7 +287,6 @@
             $str = strtolower($str);
             $separators = self::$_separators;
             foreach ($separators as $separator) {
-                $pattern = '/[s]+[' . ($separator) . ']{1}[s]+/';
                 $str = str_replace(
                     ' ' . ($separator) . ' ',
                     ($separator) . ' ',
@@ -381,14 +377,13 @@
         {
             $cleaned = self::_clean($str);
             $normalized = self::_normalize($cleaned);
-// prx($normalized);
             self::_loadCountries();
             self::_loadLocationStrings();
-            if (isset(self::$_locationStrings[$normalized]) === true) {
-                $location = self::$_locationStrings[$normalized];
-                return $location;
+            if (isset(self::$_locationStrings[$normalized]) === false) {
+                return null;
             }
-            return null;
+            $location = self::$_locationStrings[$normalized];
+            return $location;
         }
 
         /**
@@ -440,6 +435,10 @@
                 }
                 return false;
             });
-            prx($response);
+            echo '<h1>' . ($failed) . ' failed attempt(s) of ' . count($strs). '</h1>';
+            echo '<pre>';
+            print_r($response);
+            echo '</pre>';
+            exit(0);
         }
     }
