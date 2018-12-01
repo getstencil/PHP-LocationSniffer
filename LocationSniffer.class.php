@@ -159,12 +159,12 @@
                 '%countryName'
             ),
             'states' => array(
-                '%countryAbbr2%sep %stateAbbr ',
-                '%countryAbbr2%sep %stateName ',
-                '%countryAbbr3%sep %stateAbbr ',
-                '%countryAbbr3%sep %stateName ',
-                '%countryName%sep %stateAbbr ',
-                '%countryName%sep %stateName ',
+                '%countryAbbr2%sep %stateAbbr',
+                '%countryAbbr2%sep %stateName',
+                '%countryAbbr3%sep %stateAbbr',
+                '%countryAbbr3%sep %stateName',
+                '%countryName%sep %stateAbbr',
+                '%countryName%sep %stateName',
                 '%stateAbbr',
                 '%stateAbbr%sep %countryAbbr2',
                 '%stateAbbr%sep %countryAbbr3',
