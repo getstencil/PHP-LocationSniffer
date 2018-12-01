@@ -1,7 +1,7 @@
 # PHP-LocationSniffer
 Attempts to determine location data on a passed in string.
 
-### Important note(s)
+### Important note(s):
 - This library is insanely inefficient; it's a first go at something that is
 effective, rather than optimized. Use at your own risk (read: possible memory or
 cpu issues).
