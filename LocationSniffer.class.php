@@ -65,17 +65,6 @@
         );
 
         /**
-         * _lowPopulationCityExceptions
-         * 
-         * @access  protected
-         * @static
-         * @var     array
-         */
-        protected static $_lowPopulationCityExceptions = array(
-            'Menlo Park'
-        );
-
-        /**
          * _countries
          * 
          * @access  protected
@@ -95,6 +84,17 @@
             'cities' => array(),
             'countries' => array(),
             'states' => array()
+        );
+
+        /**
+         * _lowPopulationCityExceptions
+         * 
+         * @access  protected
+         * @static
+         * @var     array
+         */
+        protected static $_lowPopulationCityExceptions = array(
+            'Menlo Park'
         );
 
         /**
