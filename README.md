@@ -1,10 +1,28 @@
 # PHP-LocationSniffer
 Attempts to determine location data on a passed in string.
 
+
 ### Important note(s):
 - This library is insanely inefficient; it's a first go at something that is
 effective, rather than optimized. Use at your own risk (read: possible memory or
 cpu issues).
+
+
+### Example:
+``` php
+    require_once '/path/to/LocationSniffer.class.php';
+    $str = 'Toronto';
+    $response = LocationSniffer::sniff($str);
+    print_r($response);
+
+    $str = 'Florida - Miami';
+    $response = LocationSniffer::sniff($str);
+    print_r($response);
+
+    $str = 'Lebanon / Beirut';
+    $response = LocationSniffer::sniff($str);
+    print_r($response);
+```
 
 
 ### Formats supported:
