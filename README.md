@@ -10,18 +10,18 @@ cpu issues).
 
 ### Example:
 ``` php
-    require_once '/path/to/LocationSniffer.class.php';
-    $str = 'Toronto';
-    $response = LocationSniffer::sniff($str);
-    print_r($response);
+require_once '/path/to/LocationSniffer.class.php';
+$str = 'Toronto';
+$response = LocationSniffer::sniff($str);
+print_r($response);
 
-    $str = 'Florida - Miami';
-    $response = LocationSniffer::sniff($str);
-    print_r($response);
+$str = 'Florida - Miami';
+$response = LocationSniffer::sniff($str);
+print_r($response);
 
-    $str = 'Lebanon / Beirut';
-    $response = LocationSniffer::sniff($str);
-    print_r($response);
+$str = 'Lebanon / Beirut';
+$response = LocationSniffer::sniff($str);
+print_r($response);
 ```
 
 
