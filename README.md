@@ -24,6 +24,110 @@ $response = LocationSniffer::sniff($str);
 print_r($response);
 ```
 
+Response:  
+``` php
+Array
+(
+    [str] => Toronto
+    [matches] => Array
+        (
+            [0] => Array
+                (
+                    [pattern] => %cityName
+                    [output] => Toronto, Canada
+                    [properties] => Array
+                        (
+                            [cityName] => Toronto
+                            [cityNameLatin] => Toronto
+                            [lat] => 43.7
+                            [lng] => -79.42
+                            [countryName] => Canada
+                            [countryAbbr2] => CA
+                            [countryAbbr3] => CAN
+                            [stateName] => Ontario
+                            [stateAbbr] => 
+                            [countryCapital] => 
+                            [stateCapital] => 1
+                            [otherCapital] => 
+                            [population] => 5213000
+                            [sep] => 
+                        )
+
+                )
+
+        )
+
+)
+```
+``` php
+Array
+(
+    [str] => Florida - Miami
+    [matches] => Array
+        (
+            [0] => Array
+                (
+                    [pattern] => %stateName%sep %cityName
+                    [output] => Miami, Florida
+                    [properties] => Array
+                        (
+                            [cityName] => Miami
+                            [cityNameLatin] => Miami
+                            [lat] => 25.784
+                            [lng] => -80.2102
+                            [countryName] => United States
+                            [countryAbbr2] => US
+                            [countryAbbr3] => USA
+                            [stateName] => Florida
+                            [stateAbbr] => FL
+                            [countryCapital] => 
+                            [stateCapital] => 
+                            [otherCapital] => 
+                            [population] => 6247425
+                            [sep] => -
+                        )
+
+                )
+
+        )
+
+)
+```
+``` php
+Array
+(
+    [str] => Lebanon / Beirut
+    [matches] => Array
+        (
+            [0] => Array
+                (
+                    [pattern] => %countryName%sep %cityName
+                    [output] => Beirut, Lebanon
+                    [properties] => Array
+                        (
+                            [cityName] => Beirut
+                            [cityNameLatin] => Beirut
+                            [lat] => 33.872
+                            [lng] => 35.5097
+                            [countryName] => Lebanon
+                            [countryAbbr2] => LB
+                            [countryAbbr3] => LBN
+                            [stateName] => Beyrouth
+                            [stateAbbr] => 
+                            [countryCapital] => 1
+                            [stateCapital] => 
+                            [otherCapital] => 
+                            [population] => 1846000
+                            [sep] => /
+                        )
+
+                )
+
+        )
+
+)
+```
+
 
 ### Formats supported:
 - `%cityName`
