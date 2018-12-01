@@ -102,9 +102,9 @@
          * 
          * @access  protected
          * @static
-         * @var     int (default: 50000)
+         * @var     int (default: 40000)
          */
-        protected static $_minPopulation = 50000;
+        protected static $_minPopulation = 40000;
 
         /**
          * _outputFormats
