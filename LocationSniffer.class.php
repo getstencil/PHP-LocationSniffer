@@ -9,6 +9,7 @@
      * @see     https://gist.github.com/Miserlou/c5cd8364bf9b2420bb29
      * @see     https://simplemaps.com/data/ca-cities
      * @see     https://docs.google.com/spreadsheets/d/11gbBoutkd9KPCqsD9YtlW_XR_Yds-ofbSwkh65bnnkM/edit?usp=sharing
+     * @see     https://stackoverflow.com/questions/2473989/list-of-big-o-for-php-functions
      * @author  Oliver Nassar <oliver@getstencil.com>
      */
     abstract class LocationSniffer
@@ -51,7 +52,7 @@
             'City' => 'cityName',
             'City (ascii)' => 'cityNameLatin',
             'Lat' => 'lat',
-            'Long' => 'lng',
+            'Long' => 'long',
             'Country' => 'countryName',
             'ISO2' => 'countryAbbr2',
             'ISO3' => 'countryAbbr3',
@@ -484,10 +485,11 @@
                     'countryAbbr2' => $city['countryAbbr2'],
                     'countryAbbr3' => $city['countryAbbr3']
                 );
-                if (in_array($entry, self::$_countries) === true) {
+                $hash = http_build_query($entry);
+                if (isset(self::$_countries[$hash]) === true) {
                     continue;
                 }
-                array_push(self::$_countries, $entry);
+                self::$_countries[$hash] = $entry;
             }
             return true;
         }
@@ -570,12 +572,29 @@
                     'stateName' => $city['stateName'],
                     'stateAbbr' => $city['stateAbbr']
                 );
-                if (in_array($entry, self::$_states) === true) {
+                $hash = http_build_query($entry);
+                if (isset(self::$_states[$hash]) === true) {
                     continue;
                 }
-                array_push(self::$_states, $entry);
+                self::$_states[$hash] = $entry;
             }
             return true;
+        }
+
+        /**
+         * _loadTests
+         * 
+         * @access  protected
+         * @static
+         * @return  bool
+         */
+        protected static function _loadTests(): bool
+        {
+            $path = (__DIR__) . '/tests.json';
+            $content = file_get_contents($path);
+            $decoded = json_decode($content, true);
+            $strs = $decoded;
+            return $strs;
         }
 
         /**
@@ -791,13 +810,8 @@
          */
         public static function test(bool $showSuccessful = true): void
         {
-            // Load test location strings
-            $path = (__DIR__) . '/tests.json';
-            $content = file_get_contents($path);
-            $decoded = json_decode($content, true);
-            $strs = $decoded;
-
             // Keep track of counts
+            $strs = self::_loadTests();
             $total = count($strs);
             $failed = 0;
             $successful = 0;
